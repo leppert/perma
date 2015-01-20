@@ -311,6 +311,8 @@ class LinkResource(MultipartResource, DefaultResource):
         # workers. They do their thing, updating the model as they go. When we get some minimum
         # set of results we can present the user (a guid for the link), we respond back.
 
+        # Mirror the requesting user's user agent
+        bundle.obj.user_agent = bundle.request.META.get('HTTP_USER_AGENT')
         # Runs validation (exception thrown if invalid), sets properties and saves the object
         bundle = super(LinkResource, self).obj_create(bundle, created_by=bundle.request.user)
         asset = Asset(link=bundle.obj)

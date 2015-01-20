@@ -449,8 +449,6 @@ class LinkManager(models.Manager):
         return self.get_queryset().accessible_to(user)
 
 HEADER_CHECK_TIMEOUT = 10
-# This the is the PhantomJS default agent
-USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.0 (development) Safari/534.34"
 
 class Link(models.Model):
     """
@@ -482,6 +480,9 @@ class Link(models.Model):
     objects = LinkManager()
     tracker = FieldTracker()
 
+    # This the is the PhantomJS default agent
+    user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.0 (development) Safari/534.34"
+
     @cached_property
     def url_details(self):
         return urlparse(self.submitted_url)
@@ -499,7 +500,7 @@ class Link(models.Model):
             return requests.head(
                 self.submitted_url,
                 verify=False,  # don't check SSL cert?
-                headers={'User-Agent': USER_AGENT, 'Accept-Encoding': '*'},
+                headers={'User-Agent': self.user_agent, 'Accept-Encoding': '*'},
                 timeout=HEADER_CHECK_TIMEOUT
             ).headers
         except (requests.ConnectionError, requests.Timeout):
