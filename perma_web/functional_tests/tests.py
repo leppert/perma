@@ -1,9 +1,6 @@
 from __future__ import print_function
 
 import socket
-import StringIO
-import imghdr
-import requests
 import sys
 from selenium import webdriver
 from selenium.common.exceptions import ElementNotVisibleException, NoSuchElementException
