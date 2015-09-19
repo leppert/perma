@@ -9,7 +9,6 @@ from api.validations import get_mime_type
 def migrate_assets(apps, schema_editor):
     # Update CDXLines to point to Link instead of Asset
     CDXLine = apps.get_model("perma", "CDXLine")
-    print "Migrating CDXLines."
     for line in CDXLine.objects.all().select_related('asset'):
         line.link_id = line.asset.link_id
         line.save()
@@ -17,7 +16,6 @@ def migrate_assets(apps, schema_editor):
     # Create Captures
     Asset = apps.get_model("perma", "Asset")
     Capture = apps.get_model("perma", "Capture")
-    print "Migrating Assets."
     obj_cache = []
     for i, asset in enumerate(Asset.objects.select_related('link').all()):
         if not i%1000:
