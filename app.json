@@ -1,6 +1,8 @@
 {
   "name":"perma",
-  "scripts":{},
+  "scripts": {
+    "postdeploy": "bin/post_deploy"
+  },
   "env":{
     "BUILDPACK_URL":{
       "required":true
@@ -24,18 +26,6 @@
       "required":true
     },
     "DJANGO__DATABASE__default__allow_thread_sharing":{
-      "required":true
-    },
-    "DJANGO__DATABASES__default__HOST":{
-      "required":true
-    },
-    "DJANGO__DATABASES__default__NAME":{
-      "required":true
-    },
-    "DJANGO__DATABASES__default__PASSWORD":{
-      "required":true
-    },
-    "DJANGO__DATABASES__default__USER":{
       "required":true
     },
     "DJANGO__DEBUG":{
@@ -91,6 +81,7 @@
     }
   },
   "addons":[
+    "cleardb",
     "cloudamqp",
     "newrelic",
     "papertrail",
